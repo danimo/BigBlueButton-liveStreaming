@@ -16,7 +16,7 @@ from datetime import datetime
 
 downloadProcess = None
 browser = None
-selelnium_timeout = 30
+selenium_timeout = 30
 connect_timeout = 5
 
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
@@ -78,9 +78,13 @@ def bbb_browser():
     WebDriverWait(browser, selelnium_timeout).until(element)
     browser.find_elements_by_xpath('//span[contains(@class,"success")]')[0].click()
 
+    element = EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Listen only"]'))
+    WebDriverWait(browser, selenium_timeout).until(element)
+    browser.find_elements_by_css_selector('[aria-label="Listen only"]')[0].click()
+
     element = EC.invisibility_of_element((By.CSS_SELECTOR, '.ReactModal__Overlay'))
-    WebDriverWait(browser, selelnium_timeout).until(element)
-    browser.find_element_by_id('message-input').send_keys("This meeting is streamed to: %s" % args.target.partition('//')[2].partition('/')[0])
+    WebDriverWait(browser, selenium_timeout).until(element)
+    browser.find_element_by_id('message-input').send_keys("This meeting is streamed to: %s" % args.target)
     browser.find_elements_by_css_selector('[aria-label="Send message"]')[0].click()
     
     if args.chat:
