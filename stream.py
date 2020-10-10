@@ -75,7 +75,7 @@ def bbb_browser():
     browser.get(join_url)
 
     element = EC.presence_of_element_located((By.XPATH, '//span[contains(@class,"success")]'))
-    WebDriverWait(browser, selelnium_timeout).until(element)
+    WebDriverWait(browser, selenium_timeout).until(element)
     browser.find_elements_by_xpath('//span[contains(@class,"success")]')[0].click()
 
     element = EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Listen only"]'))
